@@ -3,48 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آلة حاسبة احترافية - عبدالرحمن</title>
-    <link rel="stylesheet" href="calculator-style.css">
+    <title>الآلة الحاسبة الاحترافية - عبدالرحمن</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="calculator-style.css">
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <header class="header">
-            <h1><i class="fas fa-calculator"></i> آلة حاسبة احترافية</h1>
-            <p class="subtitle">آلة حاسبة تفاعلية بتصميم عصري</p>
+            <h1><i class="fas fa-calculator"></i> الآلة الحاسبة الاحترافية</h1>
+            <div class="controls">
+                <button class="theme-btn" onclick="toggleTheme()" title="تغيير الثيم">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mode-btn" onclick="toggleMode()" title="الوضع العلمي">
+                    <i class="fas fa-flask"></i> علمي
+                </button>
+            </div>
         </header>
 
+        <!-- Calculator -->
         <div class="calculator">
+            <!-- Display -->
             <div class="display">
-                <div class="previous-operand" id="previousOperand"></div>
-                <div class="current-operand" id="currentOperand">0</div>
+                <div class="history-display" id="historyDisplay"></div>
+                <div class="current-display" id="currentDisplay">0</div>
             </div>
-            
-            <button class="btn clear" onclick="clearAll()">C</button>
-            <button class="btn delete" onclick="deleteLast()">⌫</button>
-            <button class="btn operator" onclick="appendOperator('%')">%</button>
-            <button class="btn operator" onclick="appendOperator('/')">÷</button>
-            
-            <button class="btn number" onclick="appendNumber('7')">7</button>
-            <button class="btn number" onclick="appendNumber('8')">8</button>
-            <button class="btn number" onclick="appendNumber('9')">9</button>
-            <button class="btn operator" onclick="appendOperator('*')">×</button>
-            
-            <button class="btn number" onclick="appendNumber('4')">4</button>
-            <button class="btn number" onclick="appendNumber('5')">5</button>
-            <button class="btn number" onclick="appendNumber('6')">6</button>
-            <button class="btn operator" onclick="appendOperator('-')">-</button>
-            
-            <button class="btn number" onclick="appendNumber('1')">1</button>
-            <button class="btn number" onclick="appendNumber('2')">2</button>
-            <button class="btn number" onclick="appendNumber('3')">3</button>
-            <button class="btn operator" onclick="appendOperator('+')">+</button>
-            
-            <button class="btn number zero" onclick="appendNumber('0')">0</button>
-            <button class="btn number" onclick="appendNumber('.')">.</button>
-            <button class="btn equals" onclick="calculate()">=</button>
+
+            <!-- History Panel -->
+            <div class="history-panel" id="historyPanel">
+                <div class="history-header">
+                    <h3><i class="fas fa-history"></i> السجل</h3>
+                    <button onclick="clearHistory()" class="clear-history">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="history-list" id="historyList"></div>
+            </div>
+
+            <!-- Buttons Grid -->
+            <div class="buttons" id="buttonsGrid">
+                <!-- Basic Mode -->
+                <button class="btn btn-function" onclick="clearAll()">AC</button>
+                <button class="btn btn-function" onclick="deleteLast()"></button>
+                <button class="btn btn-function" onclick="appendOperator('%')">%</button>
+                <button class="btn btn-operator" onclick="appendOperator('/')">÷</button>
+
+                <button class="btn btn-number" onclick="appendNumber('7')">7</button>
+                <button class="btn btn-number" onclick="appendNumber('8')">8</button>
+                <button class="btn btn-number" onclick="appendNumber('9')">9</button>
+                <button class="btn btn-operator" onclick="appendOperator('*')">×</button>
+
+                <button class="btn btn-number" onclick="appendNumber('4')">4</button>
+                <button class="btn btn-number" onclick="appendNumber('5')">5</button>
+                <button class="btn btn-number" onclick="appendNumber('6')">6</button>
+                <button class="btn btn-operator" onclick="appendOperator('-')">−</button>
+
+                <button class="btn btn-number" onclick="appendNumber('1')">1</button>
+                <button class="btn btn-number" onclick="appendNumber('2')">2</button>
+                <button class="btn btn-number" onclick="appendNumber('3')">3</button>
+                <button class="btn btn-operator" onclick="appendOperator('+')">+</button>
+
+                <button class="btn btn-number btn-zero" onclick="appendNumber('0')">0</button>
+                <button class="btn btn-number" onclick="appendNumber('.')">.</button>
+                <button class="btn btn-equals" onclick="calculate()">=</button>
+            </div>
+
+            <!-- Scientific Mode Buttons (Hidden by default) -->
+            <div class="buttons scientific-buttons" id="scientificButtons" style="display: none;">
+                <button class="btn btn-scientific" onclick="scientificCalc('sin')">sin</button>
+                <button class="btn btn-scientific" onclick="scientificCalc('cos')">cos</button>
+                <button class="btn btn-scientific" onclick="scientificCalc('tan')">tan</button>
+                <button class="btn btn-scientific" onclick="scientificCalc('log')">log</button>
+
+                <button class="btn btn-scientific" onclick="scientificCalc('ln')">ln</button>
+                <button class="btn btn-scientific" onclick="scientificCalc('sqrt')">√</button>
+                <button class="btn btn-scientific" onclick="scientificCalc('pow')">x²</button>
+                <button class="btn btn-scientific" onclick="scientificCalc('pi')">π</button>
+
+                <button class="btn btn-scientific" onclick="scientificCalc('e')">e</button>
+                <button class="btn btn-scientific" onclick="appendOperator('(')">(</button>
+                <button class="btn btn-scientific" onclick="appendOperator(')')">)</button>
+                <button class="btn btn-scientific" onclick="scientificCalc('fact')">n!</button>
+            </div>
         </div>
 
+        <!-- Back Link -->
         <a href="index.html" class="back-link">
             <i class="fas fa-arrow-right"></i> الرجوع للصفحة الرئيسية
         </a>
