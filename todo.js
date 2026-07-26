@@ -1,5 +1,10 @@
-// مصفوفة لتخزين المهام
-let tasks = [];
+// نجيب المهام من LocalStorage (أو نبدأ بمصفوفة فاضية)
+let tasks = JSON.parse(localStorage.getItem("myTasks")) || [];
+
+// دالة حفظ المهام في LocalStorage
+function saveTasks() {
+    localStorage.setItem("myTasks", JSON.stringify(tasks));
+}
 
 // دالة إضافة مهمة جديدة
 function addTask() {
@@ -11,7 +16,6 @@ function addTask() {
         return;
     }
     
-    // نضيف المهمة للمصفوفة
     var task = {
         id: Date.now(),
         text: taskText,
@@ -19,13 +23,12 @@ function addTask() {
     };
     
     tasks.push(task);
+    saveTasks();  // نحفظ
     taskInput.value = "";
-    
-    // نعرض المهام
     renderTasks();
 }
 
-// دالة عرض المهام على الشاشة
+// دالة عرض المهام
 function renderTasks() {
     var taskList = document.getElementById("taskList");
     taskList.innerHTML = "";
@@ -48,7 +51,6 @@ function renderTasks() {
         taskList.appendChild(li);
     });
     
-    // نحدث عدد المهام
     updateTaskCount();
 }
 
@@ -57,10 +59,11 @@ function deleteTask(taskId) {
     tasks = tasks.filter(function(task) {
         return task.id !== taskId;
     });
+    saveTasks();  // نحفظ
     renderTasks();
 }
 
-// دالة إكمال/إلغاء إكمال مهمة
+// دالة إكمال/إلغاء مهمة
 function toggleTask(taskId) {
     var task = tasks.find(function(t) {
         return t.id === taskId;
@@ -68,22 +71,25 @@ function toggleTask(taskId) {
     
     if (task) {
         task.completed = !task.completed;
+        saveTasks();  // نحفظ
         renderTasks();
     }
 }
 
-// دالة تحديث عدد المهام
+// دالة تحديث العدّاد
 function updateTaskCount() {
     var remainingTasks = tasks.filter(function(task) {
         return !task.completed;
     });
-    
     document.getElementById("taskCount").innerText = remainingTasks.length;
 }
 
-// السماح بالإضافة بزر Enter
+// Enter لإضافة مهمة
 document.getElementById("taskInput").addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
         addTask();
     }
 });
+
+// نعرض المهام أول ما الصفحة تفتح
+renderTasks();
