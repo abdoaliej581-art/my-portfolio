@@ -1,5 +1,5 @@
 // مفتاح API بتاعك
-const API_KEY = "bf5c01dfb8628e766da04a72dca87ab4";
+const API_KEY = "372a715e485a063040193286f99237ac";
 const API_URL = "https://api.openweathermap.org/data/2.5/weather";
 
 // دالة جلب بيانات الطقس
