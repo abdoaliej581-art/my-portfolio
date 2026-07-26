@@ -142,6 +142,11 @@ h2 {
     transition: background-color 0.3s;
 }
 
+.js {
+    width: 30%;  /* غير من 100% لـ 30% */
+    background-color: #f39c12;
+}
+
 .project-link:hover {
     background-color: #1557b0;
     text-decoration: none;
