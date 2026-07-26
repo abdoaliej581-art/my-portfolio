@@ -1,0 +1,85 @@
+body {
+    background-color: #f0f4f8;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+}
+
+h1 {
+    color: #1a73e8;
+    font-size: 40px;
+}
+
+p {
+    color: #555;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+img {
+    border-radius: 50%;
+    border: 5px solid #1a73e8;
+    margin: 20px 0;
+}
+
+.button {
+    background-color: #1a73e8;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 18px;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.button:hover {
+    background-color: #1557b0;
+}
+
+h2 {
+    color: #1a73e8;
+    font-size: 28px;
+    margin-top: 40px;
+}
+
+.skill {
+    max-width: 500px;
+    margin: 20px auto;
+    text-align: right;
+}
+
+.skill span {
+    display: block;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.skill-bar {
+    background-color: #ddd;
+    border-radius: 10px;
+    height: 20px;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    border-radius: 10px;
+    background-color: #1a73e8;
+    transition: width 1s ease-in-out;
+}
+
+.html {
+    width: 90%;
+}
+
+.css {
+    width: 85%;
+}
+
+.js {
+    width: 30%;
+    background-color: #f39c12;
+}
