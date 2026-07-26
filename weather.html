@@ -5,24 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تطبيق الطقس - عبدالرحمن</title>
     <link rel="stylesheet" href="weather-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>️ تطبيق الطقس</h1>
-        <p class="subtitle">اعرف حالة الطقس في أي مدينة حول العالم</p>
-        
+        <header class="header">
+            <h1><i class="fas fa-cloud-sun"></i> تطبيق الطقس</h1>
+            <p class="subtitle">اعرف حالة الطقس في أي مدينة حول العالم</p>
+        </header>
+
         <div class="search-box">
-            <input type="text" id="cityInput" placeholder="اكتب اسم المدينة (مثلاً: Cairo, Alexandria)">
-            <button onclick="getWeather()" class="search-btn">بحث</button>
+            <input type="text" id="cityInput" placeholder="اكتب اسم المدينة (مثلاً: Cairo, Alexandria)" autocomplete="off">
+            <button onclick="getWeather()" class="search-btn">
+                <i class="fas fa-search"></i> بحث
+            </button>
         </div>
-        
+
         <div id="weatherResult" class="weather-result">
-            <p class="hint">اكتب اسم مدينة واضغط بحث لعرض حالة الطقس</p>
+            <div class="empty-state">
+                <i class="fas fa-globe-americas"></i>
+                <p>اكتب اسم مدينة واضغط بحث لعرض حالة الطقس</p>
+            </div>
         </div>
-        
-        <a href="index.html" class="back-link">← الرجوع للصفحة الرئيسية</a>
+
+        <div id="loadingState" class="loading-state" style="display: none;">
+            <div class="spinner"></div>
+            <p>جاري البحث...</p>
+        </div>
+
+        <div id="errorState" class="error-state" style="display: none;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p id="errorMessage"></p>
+        </div>
+
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-right"></i> الرجوع للصفحة الرئيسية
+        </a>
     </div>
-    
+
     <script src="weather.js"></script>
 </body>
 </html>
