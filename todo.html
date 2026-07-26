@@ -5,25 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>قائمة المهام - عبدالرحمن</title>
     <link rel="stylesheet" href="todo-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>📝 قائمة مهامي</h1>
-        
+        <header class="header">
+            <h1><i class="fas fa-tasks"></i> قائمة مهامي</h1>
+            <p class="subtitle">نظّم يومك وأنجز مهامك بفعالية</p>
+        </header>
+
         <div class="input-section">
-            <input type="text" id="taskInput" placeholder="أضف مهمة جديدة...">
-            <button onclick="addTask()" class="add-btn">إضافة</button>
+            <input type="text" id="taskInput" placeholder="أضف مهمة جديدة..." autocomplete="off">
+            <button onclick="addTask()" class="add-btn">
+                <i class="fas fa-plus"></i> إضافة
+            </button>
         </div>
-        
-        <ul id="taskList"></ul>
-        
+
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterTasks('all')">الكل</button>
+            <button class="filter-btn" onclick="filterTasks('active')">النشطة</button>
+            <button class="filter-btn" onclick="filterTasks('completed')">المكتملة</button>
+        </div>
+
+        <ul id="taskList" class="task-list"></ul>
+
         <div class="stats">
-            <p>المهام المتبقية: <span id="taskCount">0</span></p>
+            <div class="stat-item">
+                <i class="fas fa-list"></i>
+                <span>المهام الكلية: <strong id="totalTasks">0</strong></span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-check-circle"></i>
+                <span>المكتملة: <strong id="completedTasks">0</strong></span>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-clock"></i>
+                <span>المتبقية: <strong id="pendingTasks">0</strong></span>
+            </div>
         </div>
-        
-        <a href="index.html" class="back-link">← الرجوع للصفحة الرئيسية</a>
+
+        <button onclick="clearCompleted()" class="clear-btn">
+            <i class="fas fa-trash"></i> حذف المهام المكتملة
+        </button>
+
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-right"></i> الرجوع للصفحة الرئيسية
+        </a>
     </div>
-    
+
     <script src="todo.js"></script>
 </body>
 </html>
