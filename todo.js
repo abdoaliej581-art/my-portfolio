@@ -1,97 +1,150 @@
-// نجيب المهام من LocalStorage أول ما الصفحة تفتح
-let tasks = JSON.parse(localStorage.getItem("myTasks")) || [];
+// Initialize tasks from localStorage
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+let currentFilter = 'all';
 
-// دالة حفظ المهام
+// Save tasks to localStorage
 function saveTasks() {
-    localStorage.setItem("myTasks", JSON.stringify(tasks));
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// دالة إضافة مهمة
+// Add new task
 function addTask() {
-    var taskInput = document.getElementById("taskInput");
-    var taskText = taskInput.value.trim();
+    const taskInput = document.getElementById('taskInput');
+    const taskText = taskInput.value.trim();
     
-    if (taskText === "") {
-        alert("اكتب مهمة أولاً!");
+    if (taskText === '') {
+        taskInput.style.borderColor = '#f56565';
+        setTimeout(() => {
+            taskInput.style.borderColor = '';
+        }, 1000);
         return;
     }
     
-    var task = {
+    const task = {
         id: Date.now(),
         text: taskText,
-        completed: false
+        completed: false,
+        createdAt: new Date().toISOString()
     };
     
-    tasks.push(task);
+    tasks.unshift(task);
     saveTasks();
-    taskInput.value = "";
+    taskInput.value = '';
     renderTasks();
+    updateStats();
 }
 
-// دالة عرض المهام
+// Render tasks
 function renderTasks() {
-    var taskList = document.getElementById("taskList");
-    taskList.innerHTML = "";
+    const taskList = document.getElementById('taskList');
     
-    tasks.forEach(function(task) {
-        var li = document.createElement("li");
-        li.className = "task-item";
-        if (task.completed) {
-            li.classList.add("completed");
-        }
-        
-        li.innerHTML = `
-            <input type="checkbox" class="task-checkbox" 
-                ${task.completed ? 'checked' : ''} 
-                onchange="toggleTask(${task.id})">
-            <span class="task-text">${task.text}</span>
-            <button class="delete-btn" onclick="deleteTask(${task.id})">حذف</button>
+    let filteredTasks = tasks;
+    if (currentFilter === 'active') {
+        filteredTasks = tasks.filter(task => !task.completed);
+    } else if (currentFilter === 'completed') {
+        filteredTasks = tasks.filter(task => task.completed);
+    }
+    
+    if (filteredTasks.length === 0) {
+        taskList.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-clipboard-list"></i>
+                <p>لا توجد مهام لعرضها</p>
+            </div>
         `;
-        
-        taskList.appendChild(li);
-    });
+        return;
+    }
     
-    updateTaskCount();
+    taskList.innerHTML = filteredTasks.map(task => `
+        <li class="task-item ${task.completed ? 'completed' : ''}" data-id="${task.id}">
+            <input type="checkbox" class="task-checkbox" 
+                   ${task.completed ? 'checked' : ''} 
+                   onchange="toggleTask(${task.id})">
+            <span class="task-text">${escapeHtml(task.text)}</span>
+            <button class="delete-btn" onclick="deleteTask(${task.id})">
+                <i class="fas fa-trash"></i>
+            </button>
+        </li>
+    `).join('');
 }
 
-// دالة حذف مهمة
-function deleteTask(taskId) {
-    tasks = tasks.filter(function(task) {
-        return task.id !== taskId;
-    });
-    saveTasks();
-    renderTasks();
-}
-
-// دالة إكمال مهمة
-function toggleTask(taskId) {
-    var task = tasks.find(function(t) {
-        return t.id === taskId;
-    });
-    
+// Toggle task completion
+function toggleTask(id) {
+    const task = tasks.find(t => t.id === id);
     if (task) {
         task.completed = !task.completed;
         saveTasks();
         renderTasks();
+        updateStats();
     }
 }
 
-// دالة العدّاد
-function updateTaskCount() {
-    var remainingTasks = tasks.filter(function(task) {
-        return !task.completed;
-    });
-    document.getElementById("taskCount").innerText = remainingTasks.length;
+// Delete task
+function deleteTask(id) {
+    if (confirm('هل أنت متأكد من حذف هذه المهمة؟')) {
+        tasks = tasks.filter(t => t.id !== id);
+        saveTasks();
+        renderTasks();
+        updateStats();
+    }
 }
 
-// زر Enter
-document.getElementById("taskInput").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
+// Filter tasks
+function filterTasks(filter) {
+    currentFilter = filter;
+    
+    // Update active filter button
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    renderTasks();
+}
+
+// Clear completed tasks
+function clearCompleted() {
+    const completedCount = tasks.filter(t => t.completed).length;
+    if (completedCount === 0) {
+        alert('لا توجد مهام مكتملة للحذف');
+        return;
+    }
+    
+    if (confirm(`هل أنت متأكد من حذف ${completedCount} مهمة مكتملة؟`)) {
+        tasks = tasks.filter(t => !t.completed);
+        saveTasks();
+        renderTasks();
+        updateStats();
+    }
+}
+
+// Update statistics
+function updateStats() {
+    const total = tasks.length;
+    const completed = tasks.filter(t => t.completed).length;
+    const pending = total - completed;
+    
+    document.getElementById('totalTasks').textContent = total;
+    document.getElementById('completedTasks').textContent = completed;
+    document.getElementById('pendingTasks').textContent = pending;
+}
+
+// Escape HTML to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Allow adding task with Enter key
+document.getElementById('taskInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
         addTask();
     }
 });
 
-// أهم سطر: نعرض المهام أول ما الصفحة تفتح
-window.onload = function() {
-    renderTasks();
-};
+// Initial render
+renderTasks();
+updateStats();
+
+console.log('%c✅ To-Do List loaded successfully!', 'color: #667eea; font-weight: bold;');
