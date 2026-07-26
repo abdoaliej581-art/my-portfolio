@@ -79,6 +79,37 @@ h2 {
     width: 85%;
 }
 
+.education, .project {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.education h3, .project h3 {
+    color: #1a73e8;
+    margin-bottom: 10px;
+}
+
+.education p, .project p {
+    color: #555;
+    margin: 5px 0;
+}
+
+.project-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #1a73e8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.project-link:hover {
+    text-decoration: underline;
+}
+
 .js {
     width: 30%;
     background-color: #f39c12;
