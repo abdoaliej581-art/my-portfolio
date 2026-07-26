@@ -1,18 +1,18 @@
-// نجيب المهام من LocalStorage (أو نبدأ بمصفوفة فاضية)
+// نجيب المهام من LocalStorage أول ما الصفحة تفتح
 let tasks = JSON.parse(localStorage.getItem("myTasks")) || [];
 
-// دالة حفظ المهام في LocalStorage
+// دالة حفظ المهام
 function saveTasks() {
     localStorage.setItem("myTasks", JSON.stringify(tasks));
 }
 
-// دالة إضافة مهمة جديدة
+// دالة إضافة مهمة
 function addTask() {
     var taskInput = document.getElementById("taskInput");
     var taskText = taskInput.value.trim();
     
     if (taskText === "") {
-        alert("من فضلك اكتب مهمة أولاً!");
+        alert("اكتب مهمة أولاً!");
         return;
     }
     
@@ -23,7 +23,7 @@ function addTask() {
     };
     
     tasks.push(task);
-    saveTasks();  // نحفظ
+    saveTasks();
     taskInput.value = "";
     renderTasks();
 }
@@ -59,11 +59,11 @@ function deleteTask(taskId) {
     tasks = tasks.filter(function(task) {
         return task.id !== taskId;
     });
-    saveTasks();  // نحفظ
+    saveTasks();
     renderTasks();
 }
 
-// دالة إكمال/إلغاء مهمة
+// دالة إكمال مهمة
 function toggleTask(taskId) {
     var task = tasks.find(function(t) {
         return t.id === taskId;
@@ -71,12 +71,12 @@ function toggleTask(taskId) {
     
     if (task) {
         task.completed = !task.completed;
-        saveTasks();  // نحفظ
+        saveTasks();
         renderTasks();
     }
 }
 
-// دالة تحديث العدّاد
+// دالة العدّاد
 function updateTaskCount() {
     var remainingTasks = tasks.filter(function(task) {
         return !task.completed;
@@ -84,12 +84,14 @@ function updateTaskCount() {
     document.getElementById("taskCount").innerText = remainingTasks.length;
 }
 
-// Enter لإضافة مهمة
+// زر Enter
 document.getElementById("taskInput").addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
         addTask();
     }
 });
 
-// نعرض المهام أول ما الصفحة تفتح
-renderTasks();
+// أهم سطر: نعرض المهام أول ما الصفحة تفتح
+window.onload = function() {
+    renderTasks();
+};
