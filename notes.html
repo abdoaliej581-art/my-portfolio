@@ -3,31 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق الملاحظات - عبدالرحمن</title>
+    <title>تطبيق الملاحظات الاحترافي - عبدالرحمن</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="notes-style.css">
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <header class="header">
-            <h1><i class="fas fa-sticky-note"></i> تطبيقي للملاحظات</h1>
-            <p class="subtitle">دوّن أفكارك واحتفظ بها</p>
+            <div>
+                <h1><i class="fas fa-sticky-note"></i> تطبيقي للملاحظات</h1>
+                <p class="subtitle">دوّن أفكارك، نظّمها، واحتفظ بها بأمان</p>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="toggleTheme()" title="الوضع الليلي">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="icon-btn" onclick="exportNotes()" title="تصدير الملاحظات">
+                    <i class="fas fa-download"></i> تصدير
+                </button>
+            </div>
         </header>
 
-        <div class="note-input">
-            <input type="text" id="noteTitle" placeholder="عنوان الملاحظة...">
-            <textarea id="noteContent" rows="4" placeholder="اكتب ملاحظتك هنا..."></textarea>
-            <button onclick="addNote()" class="add-btn">
-                <i class="fas fa-plus"></i> إضافة ملاحظة
-            </button>
+        <!-- Input Area -->
+        <div class="note-input-card" id="noteInputCard">
+            <input type="text" id="noteTitle" placeholder="عنوان الملاحظة..." class="input-title">
+            <textarea id="noteContent" rows="3" placeholder="اكتب ملاحظتك هنا..."></textarea>
+            
+            <div class="input-actions">
+                <div class="color-picker">
+                    <span class="color-dot active" data-color="white" onclick="selectColor('white')"></span>
+                    <span class="color-dot" data-color="yellow" onclick="selectColor('yellow')"></span>
+                    <span class="color-dot" data-color="blue" onclick="selectColor('blue')"></span>
+                    <span class="color-dot" data-color="green" onclick="selectColor('green')"></span>
+                    <span class="color-dot" data-color="pink" onclick="selectColor('pink')"></span>
+                </div>
+                <button onclick="addNote()" class="add-btn" id="addBtn">
+                    <i class="fas fa-plus"></i> إضافة
+                </button>
+            </div>
         </div>
 
+        <!-- Search Bar -->
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="🔍 ابحث في الملاحظات..." oninput="searchNotes()">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="ابحث في الملاحظات بالعنوان أو المحتوى..." oninput="searchNotes()">
         </div>
 
+        <!-- Notes Grid -->
         <div class="notes-grid" id="notesGrid"></div>
 
+        <!-- Back Link -->
         <a href="index.html" class="back-link">
             <i class="fas fa-arrow-right"></i> الرجوع للصفحة الرئيسية
         </a>
