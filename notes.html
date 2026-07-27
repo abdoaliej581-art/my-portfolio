@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق الملاحظات - عبدالرحمن</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="notes-style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-sticky-note"></i> تطبيقي للملاحظات</h1>
+            <p class="subtitle">دوّن أفكارك واحتفظ بها</p>
+        </header>
+
+        <div class="note-input">
+            <input type="text" id="noteTitle" placeholder="عنوان الملاحظة...">
+            <textarea id="noteContent" rows="4" placeholder="اكتب ملاحظتك هنا..."></textarea>
+            <button onclick="addNote()" class="add-btn">
+                <i class="fas fa-plus"></i> إضافة ملاحظة
+            </button>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 ابحث في الملاحظات..." oninput="searchNotes()">
+        </div>
+
+        <div class="notes-grid" id="notesGrid"></div>
+
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-right"></i> الرجوع للصفحة الرئيسية
+        </a>
+    </div>
+
+    <script src="notes.js"></script>
+</body>
+</html>
